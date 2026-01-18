@@ -47,7 +47,10 @@ function setMediaSize() {
       fragmentShader: fragment,
       uniforms: {
         time: { value: 0 },
-        uTexture: { value: new THREE.TextureLoader().load(img.src) }
+        uTexture: { value: new THREE.TextureLoader().load(img.src) },
+        uMouse : {value: new THREE.Vector2(0,0)},
+        uEnter: {value: 0},
+        aspect: {value: new THREE.Vector2(width,height)}
       }
     })
     const mesh = new THREE.Mesh(imageGeo, imageMaterial);
@@ -58,6 +61,33 @@ function setMediaSize() {
 
 
     scene.add(mesh);
+
+    img.addEventListener("mousemove",(e)=>{
+      const x = e.offsetX/width;
+      const y = 1. -e.offsetY/height;
+
+      gsap.to(imageMaterial.uniforms.uMouse.value,{
+        x,
+        y,
+        duration:0.9
+      })
+
+    })
+
+    img.addEventListener("mouseenter",()=>{
+      gsap.to(imageMaterial.uniforms.uEnter.value,{
+        value:1,
+        duration:0.9
+
+      })
+    })
+    img.addEventListener("mouseleave",()=>{
+      gsap.to(imageMaterial.uniforms.uEnter.value,{
+        value:0,
+        duration:1
+
+      })
+    })
 
     return {
       mesh,
