@@ -23,9 +23,9 @@ void main() {
 
     float dist = distance(aspectCorrectedMouse, aspectCorrectedUv);
     float radious = 0.5;
-    float circle = smoothstep(radious,0.5, 0.0, dist);
+    float circle = smoothstep(radious,08., 0.0, dist);
 
-    float wave = sin(dist * 20. - time*2.) * 10.0;
+    float wave = sin(dist * 20. - time*2.) * 10.;
 
     pos.z += wave * circle;
     vCircle = wave * circle;
